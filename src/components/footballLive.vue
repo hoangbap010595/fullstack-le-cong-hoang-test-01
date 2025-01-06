@@ -1,10 +1,12 @@
 <template>
   <div>
-    <div v-for="league in leagues.matches" :key="league.league" class="league-section">
-      <h2 class="league-title">{{ league.league }}</h2>
-      
-      <div v-for="game in league.games" :key="game.home_team" class="match-card">
-        <h3>{{ game.home_team }} vs {{ game.away_team }}</h3>
+    <div v-for="(league, leagueIndex) in leagues.matches" :key="league.league" class="league-section">
+      <h2 class="league-title" :data-testid="`league-title-${leagueIndex}`">{{ league.league }}</h2>
+
+      <div
+        v-for="(game, gameIndex) in league.games" :key="game.home_team" class="match-card"
+        :data-testid="`match-card-${leagueIndex}-${gameIndex}`">
+        <h3 class="match-title">{{ game.home_team }} vs {{ game.away_team }}</h3>
         <p class="score">{{ game.score }}</p>
         <p class="time">{{ game.time }}</p>
         <p class="status">{{ game.status }}</p>
@@ -74,18 +76,19 @@ div {
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 4px;
-  
+
   h3 {
     margin-bottom: 0.5rem;
   }
-  
+
   .score {
     font-size: 1.2rem;
     font-weight: bold;
     color: #00613f;
   }
-  
-  .time, .status {
+
+  .time,
+  .status {
     color: #666;
     font-size: 0.9rem;
   }

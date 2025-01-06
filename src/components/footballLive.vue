@@ -1,15 +1,58 @@
+<script setup>
+import { Star, ChevronDown, FlagTriangleRight } from 'lucide-vue-next'
+</script>
+
 <template>
   <div>
-    <div v-for="(league, leagueIndex) in leagues.matches" :key="league.league" class="league-section">
-      <h2 class="league-title" :data-testid="`league-title-${leagueIndex}`">{{ league.league }}</h2>
+    <div 
+        v-for="(league, leagueIndex) in leagues.matches" 
+        :key="league.league" 
+        class="">
+      <!-- League Header -->
+      <div class="flex items-center justify-between gap-2 p-3 bg-gray-800">
+        <button class="text-yellow-400 transition-colors hover:text-yellow-300">
+          <Star size="20" />
+        </button>
+        <h3 class="flex-1 font-bold text-white" :data-testid="`league-title-${leagueIndex}`">
+          {{ league.league }}
+        </h3>
+        <button class="text-white">
+          <ChevronDown size="20" />
+        </button>
+      </div>
 
-      <div
-        v-for="(game, gameIndex) in league.games" :key="game.home_team" class="match-card"
-        :data-testid="`match-card-${leagueIndex}-${gameIndex}`">
-        <h3 class="match-title">{{ game.home_team }} vs {{ game.away_team }}</h3>
-        <p class="score">{{ game.score }}</p>
-        <p class="time">{{ game.time }}</p>
-        <p class="status">{{ game.status }}</p>
+      <!-- Games Container -->
+      <div class="flex flex-col text-sm">
+        <div
+            v-for="(game, gameIndex) in league.games" 
+            :key="game.home_team"
+            class="p-3 transition-shadow bg-gray-100"
+            :data-testid="`match-card-${leagueIndex}-${gameIndex}`">
+          <div class="hidden md:grid grid-cols-[auto_80px_60px_1fr_160px] items-center gap-4">
+            <button class="text-gray-400 transition-colors hover:text-yellow-400">
+              <Star size="20" />
+            </button>
+
+            <p class="text-gray-400">{{ game.local_time }}</p>
+            <p class="text-gray-400">{{ game.time }}</p>
+            
+            <p class="flex items-center justify-center text-gray-400">
+              <span class="font-medium">{{ game.home_team }}</span> 
+              <span class="mx-2 font-bold">{{ game.score }}</span>
+              <span class="font-medium">{{ game.away_team }}</span>
+            </p>
+
+            <div class="flex items-center justify-end gap-3">
+              <p class="flex items-center gap-1 text-gray-400">
+                HT {{ game.score_half }}
+              </p>
+              <p class="flex items-center gap-1 text-gray-400">
+                <FlagTriangleRight size="16" />
+                <span>{{ game.corner }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -54,43 +97,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-div {
-  margin: 1rem 0;
-}
-
-.league-section {
-  margin-bottom: 2rem;
-}
-
-.league-title {
-  background-color: #f5f5f5;
-  padding: 0.8rem;
-  margin-bottom: 1rem;
-  border-radius: 4px;
-}
-
-.match-card {
-  border: 1px solid #ddd;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 4px;
-
-  h3 {
-    margin-bottom: 0.5rem;
-  }
-
-  .score {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #00613f;
-  }
-
-  .time,
-  .status {
-    color: #666;
-    font-size: 0.9rem;
-  }
-}
-</style>

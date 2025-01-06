@@ -9,7 +9,7 @@ useHead({
 
 <template>
 	<div class="min-h-screen bg-gray-100">
-		<div class="container px-4 py-8 mx-auto">
+		<div class="container p-1 mx-auto sm:p-4">
       <footballLive />
 		</div>
 	</div>

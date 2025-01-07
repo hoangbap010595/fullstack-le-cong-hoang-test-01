@@ -1,5 +1,5 @@
 <script setup>
-import footballLive from "@/components/footballLive.vue"
+import footballLive from "@/components/football/footballLive.vue"
 import { useHead } from "@unhead/vue"
 
 useHead({

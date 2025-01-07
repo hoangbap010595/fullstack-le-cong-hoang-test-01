@@ -8,7 +8,7 @@ useHead({
 </script>
 
 <template>
-	<div class="min-h-screen bg-gray-100">
+	<div class="min-h-screen bg-white">
 		<div class="container p-1 mx-auto sm:p-4">
       <footballLive />
 		</div>

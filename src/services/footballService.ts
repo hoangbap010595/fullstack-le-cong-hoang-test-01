@@ -10,4 +10,5 @@ export const footballService = {
       }, 2000)
     })
   },
+  getAllListLeagueRealTime: async (data) => footballApi.getAllListLeagueRealTime(data)
 };

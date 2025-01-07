@@ -123,10 +123,6 @@ button,
   cursor: pointer;
   transition: 0.2s;
   text-transform: uppercase;
-
-  &:hover {
-    box-shadow: 3px 3px 0 0 $quite-black;
-  }
 }
 
 form {

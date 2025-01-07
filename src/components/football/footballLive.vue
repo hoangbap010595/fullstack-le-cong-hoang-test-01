@@ -14,6 +14,7 @@ const { matches } = useMatchSimulation()
 const leagues = ref([])
 const isLoading = ref(false)
 const error = ref(null)
+const collapsedLeagues = ref(new Set())
 const currentFilter = ref('live')
 const currentSearch = ref('')
 const currentSort = ref('time')
@@ -108,6 +109,14 @@ const formatScore = (score) => {
   }
 }
 
+const toggleLeague = (leagueId) => {
+  if (collapsedLeagues.value.has(leagueId)) {
+    collapsedLeagues.value.delete(leagueId)
+  } else {
+    collapsedLeagues.value.add(leagueId)
+  }
+}
+
 // ============== Toolbar ==============
 const handleFilterChange = (filter) => {
   currentFilter.value = filter
@@ -152,22 +161,39 @@ onMounted(() => {
     <div v-else>
       <div v-for="(league, leagueIndex) in filteredLeagues" :key="league.league" class="border border-solid border-[#F1F1F1]">
         <!-- League Header -->
-        <div class="flex items-center gap-3 p-3 bg-[#F1F1F1]">
+        <div class="flex items-center gap-3 px-2 py-3 md:p-3 bg-[#F1F1F1]">
           <button class="text-neutral-400 hover:text-yellow-400">
             <Star size="20" />
           </button>
-          <h3 class="flex-1 font-semibold text-neutral-900 text-[15px]" :data-testid="`league-title-${leagueIndex}`">
+          <h3
+            class="flex-1 font-semibold text-neutral-900 text-[15px] cursor-pointer"
+            :data-testid="`league-title-${leagueIndex}`"
+            @click="toggleLeague(league.league)"
+          >
             {{ league.league }}
           </h3>
-          <button class="transition-colors text-neutral-600 hover:text-neutral-900 focus:outline-none">
-            <ChevronDown size="18" />
+          <button 
+            class="transition-colors text-neutral-600 hover:text-neutral-900 focus:outline-none"
+            :data-testid="`league-toggle-${leagueIndex}`"
+            @click="toggleLeague(league.league)"
+          >
+            <ChevronDown 
+              size="18" 
+              :class="{ 'transform rotate-180': !collapsedLeagues.has(league.league) }"
+              class="transition-transform duration-200"
+            />
           </button>
         </div>
 
         <!-- Games Container -->
-        <div class="flex flex-col text-sm">
-          <div v-for="(game, gameIndex) in league.games" :key="game.home_team" class="p-3 transition-shadow bg-white"
+        <div 
+          v-show="!collapsedLeagues.has(league.league)"
+          class="flex flex-col text-sm divide-y divide-solid divide-[#F1F1F1]"
+        >
+          <div v-for="(game, gameIndex) in league.games" :key="game.home_team" class="px-2 py-1 transition-shadow bg-white md:p-3"
             :data-testid="`match-card-${leagueIndex}-${gameIndex}`">
+            
+            <!-- Desktop -->
             <div class="hidden md:grid grid-cols-[auto_80px_100px_1fr_160px] items-center gap-4">
               <button class="text-neutral-400 hover:text-yellow-400">
                 <Star size="20" />
@@ -200,6 +226,41 @@ onMounted(() => {
                 </p>
               </div>
             </div>
+
+            <!-- Mobile -->
+            <div class="flex flex-col gap-0 md:hidden">
+              <p class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-neutral-900">
+                <span class="font-medium text-right">{{ game.home_team }}</span>
+                <span class="flex items-center justify-center min-w-[60px]">
+                  <span :class="formatScore(game.score).home.class">
+                    {{ formatScore(game.score).home.score }}
+                  </span>
+                  <span class="mx-1 text-neutral-400"> - </span>
+                  <span :class="formatScore(game.score).away.class">
+                    {{ formatScore(game.score).away.score }}
+                  </span>
+                </span>
+                <span class="font-medium text-left">{{ game.away_team }}</span>
+              </p>
+              <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-neutral-900">
+                <div class="flex items-center gap-2">
+                  <button class="text-neutral-400 hover:text-yellow-400">
+                    <Star size="20" />
+                  </button>
+                  <p class="text-neutral-400">{{ game.local_time }}</p>
+                </div>
+                <p class="font-semibold text-center text-red-500">{{ getStatusText(game.time, game.status) }}</p>
+                <div class="flex items-center justify-end gap-2 text-neutral-400">
+                  <p class="flex items-center">
+                    HT {{ game.score_half }}
+                  </p>
+                  <p class="flex items-center">
+                    <FlagTriangleRight size="16" />
+                    <span>{{ game.corner }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>  
           </div>
         </div>
       </div>

@@ -230,4 +230,41 @@ describe("FootballLive", () => {
     // Verify leagues were updated
     expect(wrapper.vm.leagues).toEqual(updatedMatches.matches)
   })
+
+  it("toggles league content visibility when clicking on league button", async () => {
+    const wrapper = mount(FootballLive)
+    await nextTick()
+    await wrapper.vm.$nextTick()
+
+    // Check initial state
+    const leagueContent = wrapper.find('[data-testid="match-card-0-0"]')
+    expect(leagueContent.isVisible()).toBe(true)
+
+    console.log(leagueContent.html())
+    // Check toggle button
+    await wrapper.find('[data-testid="league-toggle-0"]').trigger('click')
+    expect(leagueContent.isVisible()).toBe(false)
+
+    // Click toggle button again to expand
+    await wrapper.find('[data-testid="league-toggle-0"]').trigger('click')
+    expect(leagueContent.isVisible()).toBe(true)
+  })
+
+  it("toggles league content visibility when clicking on league title", async () => {
+    const wrapper = mount(FootballLive)
+    await nextTick()
+    await wrapper.vm.$nextTick()
+
+    // Check initial state
+    const leagueContent = wrapper.find('[data-testid="match-card-0-0"]')
+    expect(leagueContent.isVisible()).toBe(true)
+
+    // Click league title to collapse
+    await wrapper.find('[data-testid="league-title-0"]').trigger('click')
+    expect(leagueContent.isVisible()).toBe(false)
+
+    // Click league title again to expand
+    await wrapper.find('[data-testid="league-title-0"]').trigger('click')
+    expect(leagueContent.isVisible()).toBe(true)
+  })
 })

@@ -25,6 +25,7 @@ const totalMatches = computed(() => {
   return filteredLeagues.value.reduce((sum, league) => sum + league.games.length, 0)
 })
 
+// Filter leagues by current filter
 const filteredLeagues = computed(() => {
   let dataLeagues =
     currentFilter.value === 'all' 
@@ -71,7 +72,6 @@ const filteredLeagues = computed(() => {
 })
 
 // Methods
-
 // Fetch league data and show loading state for better UX
 const fetchData = async () => {
   try {
@@ -109,6 +109,7 @@ const formatScore = (score) => {
   }
 }
 
+// Toggle league content visibility
 const toggleLeague = (leagueId) => {
   if (collapsedLeagues.value.has(leagueId)) {
     collapsedLeagues.value.delete(leagueId)

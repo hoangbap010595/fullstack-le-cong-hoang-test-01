@@ -6,6 +6,21 @@
 
 [Click to view documents](https://docs.google.com/document/d/1N4vjJTo1zki1rDAh6pQtwa-9Aavl7AXz/edit)
 
+### Desktop
+
+![alt text](./public/desktop.png)
+
+### Mobile
+
+![alt text](./public/mobile.png)
+
+### Tests
+
+![alt text](./public/test-coverage.png)
+![alt text](./public/test.png)
+
+## ✨ Technologies
+
 |                                 |                                                                      Links                                                                       |  
 |:--------------------------------|-----------------------------:|
 | ✅ `Vue.js`                      |                                             [🔧](https://vuejs.org/api/) - [🏠](https://vuejs.org/)                                              |
@@ -39,6 +54,12 @@ yarn dev
 
 ```bash
 yarn build
+```
+
+### Run unit tests
+
+```bash
+yarn test
 ```
 
 ### Lints and fixes files

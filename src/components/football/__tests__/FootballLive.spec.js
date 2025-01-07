@@ -240,7 +240,6 @@ describe("FootballLive", () => {
     const leagueContent = wrapper.find('[data-testid="match-card-0-0"]')
     expect(leagueContent.isVisible()).toBe(true)
 
-    console.log(leagueContent.html())
     // Check toggle button
     await wrapper.find('[data-testid="league-toggle-0"]').trigger('click')
     expect(leagueContent.isVisible()).toBe(false)

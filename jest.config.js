@@ -12,4 +12,7 @@ module.exports = {
   testEnvironmentOptions: {
     customExportConditions: ['node', 'node-addons'],
   },
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/__mock__',
+  ],
 } 

@@ -46,4 +46,23 @@ describe("footballService", () => {
 			expect(footballApi.getAllListLeague).toHaveBeenCalledTimes(1)
 		})
 	})
+
+  describe("getAllListLeagueRealTime", () => {
+    it("should return football matches after 2 seconds", async () => {
+      // Arrange
+      const mockMatches = [
+        { id: 1, name: "Match 1" },
+        { id: 2, name: "Match 2" },
+      ]
+
+      footballApi.getAllListLeagueRealTime.mockResolvedValue(mockMatches)
+
+      // Act
+      const result = await footballService.getAllListLeagueRealTime()
+
+      // Assert
+      expect(result).toEqual(mockMatches)
+      expect(footballApi.getAllListLeagueRealTime).toHaveBeenCalledTimes(1)
+    })
+  })
 })

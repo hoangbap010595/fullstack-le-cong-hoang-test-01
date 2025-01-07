@@ -28,12 +28,12 @@ const handleSearch = () => {
     <!-- Left side - Filter buttons -->
     <div class="flex gap-2">
       <button v-for="filter in filters" :key="filter.id" :class="[
-        'px-4 py-2 rounded-md text-md font-medium transition-colors flex items-center gap-2',
+        'px-4 py-2 rounded-md text-md font-medium transition-colors flex items-center',
         activeFilter === filter.id
           ? 'bg-red-700 text-white'
           : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
       ]" @click="handleFilterChange(filter.id)">
-        <Radio v-if="filter.id === 'live'" class="ml-2" size="16" />
+        <Radio v-if="filter.id === 'live'" class="mr-2" size="16" />
         {{ filter.label }}
       </button>
     </div>

@@ -150,7 +150,7 @@ onMounted(() => {
       <NoData />
     </div>
     <div v-else>
-      <div v-for="(league, leagueIndex) in filteredLeagues" :key="league.league" class="">
+      <div v-for="(league, leagueIndex) in filteredLeagues" :key="league.league" class="border border-solid border-[#F1F1F1]">
         <!-- League Header -->
         <div class="flex items-center gap-3 p-3 bg-[#F1F1F1]">
           <button class="text-neutral-400 hover:text-yellow-400">
